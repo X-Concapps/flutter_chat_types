@@ -2,10 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 import '../../flutter_chat_types.dart';
-import '../message.dart';
-import '../preview_data.dart' show PreviewData;
-import '../user.dart' show User;
-import 'partial_text.dart';
 
 part 'text_message.g.dart';
 
@@ -26,7 +22,7 @@ abstract class TextMessage extends Message {
     super.showStatus,
     super.status,
     required this.text,
-    this.translationState,
+    this.translationState = const TextMessageTranslationStateEmpty(),
     MessageType? type,
     super.updatedAt,
   }) : super(type: type ?? MessageType.text);
@@ -43,7 +39,7 @@ abstract class TextMessage extends Message {
     bool? showStatus,
     Status? status,
     required String text,
-    TextMessageTranslationState? translationState,
+    TextMessageTranslationState translationState,
     MessageType? type,
     int? updatedAt,
   }) = _TextMessage;
@@ -63,8 +59,7 @@ abstract class TextMessage extends Message {
     bool? showStatus,
     Status? status,
     int? updatedAt,
-    TextMessageTranslationState translationState =
-        const TextMessageTranslationStateEmpty(),
+    TextMessageTranslationState? translationState,
   }) =>
       _TextMessage(
         author: author,
@@ -78,7 +73,8 @@ abstract class TextMessage extends Message {
         showStatus: showStatus,
         status: status,
         text: partialText.text,
-        translationState: translationState,
+        translationState:
+            translationState ?? const TextMessageTranslationStateEmpty(),
         type: MessageType.text,
         updatedAt: updatedAt,
       );
@@ -90,9 +86,11 @@ abstract class TextMessage extends Message {
   final String text;
 
   /// Translation state.
-  final TextMessageTranslationState? translationState;
+  @JsonKey(defaultValue: TextMessageTranslationState.empty)
+  final TextMessageTranslationState translationState;
 
   /// Equatable props.
+  @override
   List<Object?> get props => [
         author,
         createdAt,
@@ -122,6 +120,7 @@ abstract class TextMessage extends Message {
     bool? showStatus,
     Status? status,
     String? text,
+    TextMessageTranslationState? translationState,
     int? updatedAt,
   });
 
@@ -162,7 +161,7 @@ class _TextMessage extends TextMessage {
     dynamic showStatus = _Unset,
     dynamic status = _Unset,
     String? text,
-    dynamic translationState = _Unset,
+    dynamic translationState,
     dynamic updatedAt = _Unset,
   }) =>
       _TextMessage(
@@ -184,10 +183,7 @@ class _TextMessage extends TextMessage {
             showStatus == _Unset ? this.showStatus : showStatus as bool?,
         status: status == _Unset ? this.status : status as Status?,
         text: text ?? this.text,
-        translationState: translationState == _Unset
-            ? this.translationState
-            : translationState as TextMessageTranslationState?,
-        updatedAt: updatedAt == _Unset ? this.updatedAt : updatedAt as int?,
+        translationState: translationState ?? this.translationState,
       );
 }
 

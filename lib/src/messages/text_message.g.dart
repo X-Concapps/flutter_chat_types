@@ -23,7 +23,7 @@ TextMessage _$TextMessageFromJson(Map<String, dynamic> json) => TextMessage(
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
       text: json['text'] as String,
       translationState: json['translationState'] == null
-          ? null
+          ? TextMessageTranslationState.empty()
           : TextMessageTranslationState.fromJson(
               json['translationState'] as Map<String, dynamic>),
       type: $enumDecodeNullable(_$MessageTypeEnumMap, json['type']),
@@ -53,7 +53,7 @@ Map<String, dynamic> _$TextMessageToJson(TextMessage instance) {
   writeNotNull('updatedAt', instance.updatedAt);
   writeNotNull('previewData', instance.previewData?.toJson());
   val['text'] = instance.text;
-  writeNotNull('translationState', instance.translationState?.toJson());
+  val['translationState'] = instance.translationState.toJson();
   return val;
 }
 
