@@ -11,6 +11,15 @@ abstract class TextMessageTranslationStateEmpty
 
   const factory TextMessageTranslationStateEmpty() =
       _TextMessageTranslationStateEmpty;
+
+  factory TextMessageTranslationStateEmpty.fromJson() =>
+      const TextMessageTranslationStateEmpty();
+
+  /// Converts a failed translation state to the map representation, encodable to JSON.
+  @override
+  Map<String, dynamic> toJson() => {
+        ...super.toJson(),
+      };
 }
 
 /// A utility class.

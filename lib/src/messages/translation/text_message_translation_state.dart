@@ -74,9 +74,13 @@ abstract class TextMessageTranslationState extends Equatable {
     }
   }
 
+  factory TextMessageTranslationState.empty() =>
+      const TextMessageTranslationStateEmpty();
+
   /// The state type of the translation state.
   final MessageTranslationStateType type;
 
+  @override
   List<Object?> get props => [type];
 
   /// Converts a particular message to the map representation, serializable to JSON.
