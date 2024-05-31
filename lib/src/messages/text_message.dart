@@ -63,6 +63,8 @@ abstract class TextMessage extends Message {
     bool? showStatus,
     Status? status,
     int? updatedAt,
+    TextMessageTranslationState translationState =
+        const TextMessageTranslationStateEmpty(),
   }) =>
       _TextMessage(
         author: author,
@@ -76,6 +78,7 @@ abstract class TextMessage extends Message {
         showStatus: showStatus,
         status: status,
         text: partialText.text,
+        translationState: translationState,
         type: MessageType.text,
         updatedAt: updatedAt,
       );
